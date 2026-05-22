@@ -93,7 +93,7 @@ IDEA JSON:
 
 Ensure the JSON is properly formatted for automatic parsing.
 
-Note: You should perform at least one literature search before finalizing your idea to ensure it is well-informed by existing research."""
+Note: You should perform at least one literature search before finalizing your idea to ensure it is well-informed by existing research. However, if you encounter repeated rate limit errors (429) without an API key, you may skip the literature search and proceed directly to finalizing your idea."""
 
 # Define the initial idea generation prompt
 idea_generation_prompt = """{workshop_description}
