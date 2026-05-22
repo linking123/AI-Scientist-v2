@@ -70,6 +70,8 @@ AVAILABLE_LLMS = [
     "ollama/deepseek-r1:32b",
     "ollama/deepseek-r1:70b",
     "ollama/deepseek-r1:671b",
+    # MiniMax models
+    "minimax-M2.7",
 ]
 
 
@@ -537,6 +539,22 @@ def create_client(model) -> tuple[Any, str]:
             openai.OpenAI(
                 api_key=os.environ["GEMINI_API_KEY"],
                 base_url="https://generativelanguage.googleapis.com/v1beta/openai/",
+            ),
+            model,
+        )
+    elif 'minimax' in model:
+        extra_headers = {}
+        if "OPENAI_EXTRA_HEADERS" in os.environ:
+            import json
+            extra_headers = json.loads(os.environ["OPENAI_EXTRA_HEADERS"])
+        elif "MINIMAX_GROUP_ID" in os.environ:
+            extra_headers = {"X-Group-Id": os.environ["MINIMAX_GROUP_ID"]}
+        print(f"Using OpenAI API with model {model}.")
+        return (
+            openai.OpenAI(
+                api_key=os.environ.get("OPENAI_API_KEY", ""),
+                base_url=os.environ.get("OPENAI_BASE_URL", "https://api.minimax.chat/v1"),
+                extra_headers=extra_headers if extra_headers else None,
             ),
             model,
         )
